@@ -1,7 +1,8 @@
-package io.milkcan.weatherapp
+package io.milkcan.weatherapp.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import io.milkcan.weatherapp.R
 import io.milkcan.weatherapp.model.City
 
 class MainActivity : AppCompatActivity() {
