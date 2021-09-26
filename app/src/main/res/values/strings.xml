@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <string name="title_current">Current Weather</string>
+    <string name="label_temp_high">High:</string>
+    <string name="label_temp_low">Low:</string>
+    <string name="label_precipitation">Precip:</string>
+    <string name="label_last_update">Last Updated:</string>
+    <string name="label_temp_F">℉</string>
+    <string name="label_temp_C">℃</string>
+</resources>
