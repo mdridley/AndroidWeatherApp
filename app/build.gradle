@@ -48,6 +48,7 @@ dependencies {
 
     //KotlinX
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
 
     // Retrofit
     def retrofit_version = '2.6.0'

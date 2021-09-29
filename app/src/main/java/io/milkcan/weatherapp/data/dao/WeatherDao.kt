@@ -4,14 +4,13 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
-import io.milkcan.weatherapp.model.Forecast
-import kotlinx.coroutines.flow.Flow
+import io.milkcan.weatherapp.model.WeatherForecast
 
 @Dao
 interface WeatherDao {
     @Insert(onConflict = REPLACE)
-    fun save(forecast: Forecast)
+    fun save(weatherForecast: WeatherForecast)
 
-    @Query("SELECT * FROM forecast WHERE id = :forecastId")
-    fun load(forecastId: Int): Flow<Forecast>
+    @Query("SELECT * FROM weatherForecast WHERE id = :weatherForecastId")
+    fun load(weatherForecastId: Int): WeatherForecast
 }

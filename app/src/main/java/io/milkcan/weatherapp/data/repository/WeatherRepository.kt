@@ -4,9 +4,9 @@ import io.milkcan.weatherapp.App
 import io.milkcan.weatherapp.data.api.NetworkingSingleton
 import io.milkcan.weatherapp.data.api.OpenWeatherAPI
 import io.milkcan.weatherapp.data.cache.WeatherCache
-import io.milkcan.weatherapp.model.Forecast
+import io.milkcan.weatherapp.model.WeatherForecast
+import io.reactivex.annotations.SchedulerSupport.IO
 import io.reactivex.rxkotlin.subscribeBy
-import kotlinx.coroutines.flow.Flow
 import java.util.concurrent.TimeUnit
 
 class WeatherRepository  private constructor()
@@ -30,7 +30,7 @@ class WeatherRepository  private constructor()
     private val service by lazy { NetworkingSingleton.instance.createService(OpenWeatherAPI::class.java) }
     private val weatherDao = App.database.weatherDao()
 
-    suspend fun getCurrentWeather(locationId: Int): Flow<Forecast> {
+    suspend fun getCurrentWeather(locationId: Int): WeatherForecast {
         refreshWeather(locationId)
         return weatherDao.load(locationId)
     }

@@ -6,11 +6,24 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import io.milkcan.weatherapp.R
-import io.milkcan.weatherapp.model.Forecast
+import io.milkcan.weatherapp.model.WeatherForecast
 
-class WeatherListAdapter(private val items: ArrayList<Forecast>): RecyclerView.Adapter<WeatherViewHolder>() {
+class WeatherListAdapter(
+    private val items: ArrayList<WeatherForecast>,
+    private val listener: WeatherItemClicked
+    ): RecyclerView.Adapter<WeatherViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_weather, parent, false)
+        val viewHolder = WeatherViewHolder(view)
+
+        view.setOnClickListener {
+            val position: Int = viewHolder.bindingAdapterPosition
+            if (position > 0) {
+                listener.onItemClicked(items[position])
+            }
+        }
+
         return WeatherViewHolder(view)
     }
 
@@ -26,4 +39,8 @@ class WeatherListAdapter(private val items: ArrayList<Forecast>): RecyclerView.A
 
 class WeatherViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     var title: TextView = itemView.findViewById(R.id.locationName)
+}
+
+interface WeatherItemClicked {
+    fun onItemClicked(item: WeatherForecast)
 }

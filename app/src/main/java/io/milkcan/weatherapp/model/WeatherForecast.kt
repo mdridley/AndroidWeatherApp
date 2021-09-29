@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-class Forecast {
+class WeatherForecast {
     @PrimaryKey var id: Int = 0
     var name: String = ""
 

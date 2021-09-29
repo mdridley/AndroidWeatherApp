@@ -3,11 +3,11 @@ package io.milkcan.weatherapp.util
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import io.milkcan.weatherapp.data.dao.WeatherDao
-import io.milkcan.weatherapp.model.Forecast
+import io.milkcan.weatherapp.model.WeatherForecast
 
 @Database(
     entities = [
-        Forecast::class,
+        WeatherForecast::class,
     ],
     version = 1,
     exportSchema = false
