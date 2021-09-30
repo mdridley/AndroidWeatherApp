@@ -1,7 +1,9 @@
 package io.milkcan.weatherapp.data.api
 
-import io.milkcan.weatherapp.App
 import io.milkcan.weatherapp.BuildConfig
+import io.milkcan.weatherapp.ui.activity.MainActivity
+import io.milkcan.weatherapp.util.Settings.BASE_URL
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -37,9 +39,14 @@ class NetworkingSingleton private constructor() {
             httpClient.addInterceptor(loggingInterceptor)
         }
 
+        val cacheSize: Long = 10 * 1024 * 1024
+        val cache = Cache(MainActivity.appCacheDir, cacheSize)
+        httpClient.cache(cache)
+
         retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(App.gson))
+            .addConverterFactory(GsonConverterFactory.create(MainActivity.gson))
             .client(httpClient.build())
             .build()
     }

@@ -1,6 +1,6 @@
 package io.milkcan.weatherapp.data.cache
 
-import io.milkcan.weatherapp.model.WeatherForecast
+import io.milkcan.weatherapp.model.entity.WeatherForecast
 import java.time.Duration
 import java.time.LocalDate
 import kotlin.collections.HashMap
@@ -35,6 +35,6 @@ class WeatherCache private constructor() {
     fun set(weatherForecast: WeatherForecast) {
         val newObject: CacheObject<WeatherForecast> = CacheObject()
         newObject.cacheObject = weatherForecast
-        forecasts[weatherForecast.id] = newObject
+        forecasts[weatherForecast.locationId] = newObject
     }
 }

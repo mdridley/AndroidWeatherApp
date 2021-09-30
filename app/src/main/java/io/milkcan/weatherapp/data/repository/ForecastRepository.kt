@@ -2,8 +2,9 @@ package io.milkcan.weatherapp.data.repository
 
 import io.milkcan.weatherapp.data.api.NetworkingSingleton
 import io.milkcan.weatherapp.data.api.OpenWeatherAPI
+import io.milkcan.weatherapp.data.cache.ForecastCache
 import io.milkcan.weatherapp.data.cache.WeatherCache
-import io.milkcan.weatherapp.model.entity.WeatherForecast
+import io.milkcan.weatherapp.model.entity.CityForecast
 import io.milkcan.weatherapp.ui.activity.MainActivity
 import io.milkcan.weatherapp.util.Settings.API_KEY
 import io.milkcan.weatherapp.util.Settings.CACHE_TIMEOUT
@@ -15,18 +16,18 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class WeatherRepository private constructor(): CoroutineScope
+class ForecastRepository private constructor(): CoroutineScope
 {
     companion object {
-        private var weatherRepository: WeatherRepository? = null
+        private var forecastRepository: ForecastRepository? = null
 
-        val instance: WeatherRepository
+        val instance: ForecastRepository
             @Synchronized get() {
-                if (weatherRepository == null) {
-                    weatherRepository = WeatherRepository()
+                if (forecastRepository == null) {
+                    forecastRepository = ForecastRepository()
                 }
 
-                return weatherRepository!!
+                return forecastRepository!!
             }
     }
 
@@ -36,22 +37,22 @@ class WeatherRepository private constructor(): CoroutineScope
         get() = Dispatchers.Main + job
 
     private val service by lazy { NetworkingSingleton.instance.createService(OpenWeatherAPI::class.java) }
-    private val weatherDao = MainActivity.database.weatherDao()
+    private val forecastDao = MainActivity.database.forecastDao()
 
-    fun getCurrentWeather(locationId: Int): Flow<WeatherForecast> {
+    fun getForecast(locationId: Int): Flow<CityForecast> {
         launch {
-            refreshWeather(locationId)
+            refreshForecast(locationId)
         }
-        return weatherDao.load(locationId)
+        return forecastDao.load(locationId)
     }
 
-    private suspend fun refreshWeather(forecastId: Int) {
+    private suspend fun refreshForecast(forecastId: Int) {
         val weatherExists = WeatherCache.instance.has(forecastId, CACHE_TIMEOUT)
         if (weatherExists == null) {
-            val response = service.getCurrentWeather(forecastId.toString(), UNITS, API_KEY)
-            val entity = WeatherForecast.convertApiToEntity(response)
-            weatherDao.save(entity)
-            WeatherCache.instance.set(entity)
+            val response = service.getForecast(forecastId.toString(), UNITS, API_KEY)
+            val entity = CityForecast.convertApiToEntity(response)
+            forecastDao.save(entity)
+            ForecastCache.instance.set(entity)
         }
     }
 }

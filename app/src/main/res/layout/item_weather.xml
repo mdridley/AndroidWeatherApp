@@ -62,7 +62,7 @@
             android:layout_gravity="end"
             android:textSize="12sp"
             android:textStyle="italic"
-            tools:text="Last Updated: Wednesday, Sept 22, 2021"
+            tools:text="Last Updated: Wednesday, Sept 22, 2021 2:33PM"
             />
 
     </LinearLayout>

@@ -1,14 +1,21 @@
 package io.milkcan.weatherapp.data.api
 
-import io.milkcan.weatherapp.model.WeatherForecast
-import io.milkcan.weatherapp.model.api.ApiResponseObject
+import io.milkcan.weatherapp.model.api.CityForecast
+import io.milkcan.weatherapp.model.api.WeatherForecast
 import retrofit2.http.*
-import io.reactivex.Single
 
 interface OpenWeatherAPI {
-    @GET("weather?q={locationId}&units=imperial&appid={apiKey}")
-    suspend fun getCurrentWeather(@Path("locationId") locationId: Int, @Path("apiKey") apiKey: String): Single<ApiResponseObject<WeatherForecast>>
+    @GET("weather")
+    suspend fun getCurrentWeather(
+        @Query("id") locationId: String,
+        @Query("units") units: String,
+        @Query("apiKey") apiKey: String,
+    ): WeatherForecast
 
-    @GET("forecast?q={locationId}&units=imperial&appid={apiKey}")
-    suspend fun getForecast(@Path("locationId") locationId: Int, @Path("apiKey") apiKey: String): Single<ApiResponseObject<WeatherForecast>>
+    @GET("forecast")
+    suspend fun getForecast(
+        @Query("id") locationId: String,
+        @Query("units") units: String,
+        @Query("apiKey") apiKey: String
+    ): CityForecast
 }
