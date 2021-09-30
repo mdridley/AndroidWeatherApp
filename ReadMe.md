@@ -5,11 +5,11 @@ This is an Android app that will demonstrate functionality to obtain Weather dat
 * minSdk 23
 * targetSdk & compileSdk 29
 
-# Design
+## Design
 
 Wireframes: WeatherApp.pdf
 
-# Data Load
+## Data Load
 
 Open Office file for Capital Cities: "City Info.ods"
 
